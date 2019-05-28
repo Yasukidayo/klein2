@@ -10,8 +10,9 @@ namespace WebApplication1.Models
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Course> Courses { get; set; }
+        public DbSet<Department> Departments { get; set; }
         public DbSet<ThanksCard> ThanksCards { get; set; }
+        public DbSet<Root> Roots { get; set; }
 
     }
 }

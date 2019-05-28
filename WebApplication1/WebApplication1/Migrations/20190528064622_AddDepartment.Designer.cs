@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebApplication1.Models;
@@ -9,9 +10,10 @@ using WebApplication1.Models;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20190528064622_AddDepartment")]
+    partial class AddDepartment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,34 +21,34 @@ namespace WebApplication1.Migrations
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            modelBuilder.Entity("WebApplication1.Models.Course", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Courses");
+                });
+
             modelBuilder.Entity("WebApplication1.Models.Department", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long>("CD");
-
                     b.Property<string>("Name");
 
                     b.Property<long>("parent");
 
+                    b.Property<long>("部課CD");
+
                     b.HasKey("Id");
 
                     b.ToTable("Departments");
-                });
-
-            modelBuilder.Entity("WebApplication1.Models.Root", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("BodyFlag1");
-
-                    b.Property<string>("BodyFlag2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roots");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.ThanksCard", b =>
@@ -58,15 +60,7 @@ namespace WebApplication1.Migrations
 
                     b.Property<DateTime>("CreatedDateTime");
 
-                    b.Property<long>("Date");
-
-                    b.Property<bool>("Flag1");
-
-                    b.Property<bool>("Flag2");
-
                     b.Property<long?>("FromId");
-
-                    b.Property<long>("ThanksCardCD");
 
                     b.Property<string>("Title");
 
@@ -85,8 +79,6 @@ namespace WebApplication1.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<long>("CD");
 
                     b.Property<bool>("IsAdmin");
 

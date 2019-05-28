@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace WebApplication1.Models
 {
-    public class Course
+    public class Root
     {
         public long Id { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
+        public string BodyFlag1 { get; set; }
+        public string BodyFlag2 { get; set; }
     }
 }
