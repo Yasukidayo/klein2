@@ -2,7 +2,7 @@
 
 namespace WebApplication1.Migrations
 {
-    public partial class Root : Migration
+    public partial class rogin : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

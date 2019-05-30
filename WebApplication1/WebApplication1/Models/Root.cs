@@ -7,7 +7,8 @@ namespace WebApplication1.Models
 {
     public class Root
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
+        public bool IsAdmin { get; set; }
         public string BodyFlag1 { get; set; }
         public string BodyFlag2 { get; set; }
     }

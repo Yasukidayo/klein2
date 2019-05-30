@@ -5,7 +5,7 @@ namespace WebApplication1.Models
     public class ThanksCard
     {
         public long Id { get; set; }
-        public long ThanksCardCD { get; set; }
+        public long CD { get; set; }
         public virtual User From { get; set; }
         public virtual User To { get; set; }
         public string Title { get; set; }

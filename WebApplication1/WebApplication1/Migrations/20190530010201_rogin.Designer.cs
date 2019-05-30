@@ -10,8 +10,8 @@ using WebApplication1.Models;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190528070544_AddRoot")]
-    partial class AddRoot
+    [Migration("20190530010201_rogin")]
+    partial class rogin
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,11 +30,29 @@ namespace WebApplication1.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<long>("parent");
+                    b.Property<long?>("ParentId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ParentId");
+
                     b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.Root", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("BodyFlag1");
+
+                    b.Property<string>("BodyFlag2");
+
+                    b.Property<bool>("IsAdmin");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roots");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.ThanksCard", b =>
@@ -76,15 +94,30 @@ namespace WebApplication1.Migrations
 
                     b.Property<long>("CD");
 
+                    b.Property<long?>("DepartmentId");
+
                     b.Property<bool>("IsAdmin");
 
                     b.Property<string>("Name");
 
                     b.Property<string>("Password");
 
+                    b.Property<int?>("RootId");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("RootId");
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.Department", b =>
+                {
+                    b.HasOne("WebApplication1.Models.Department", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.ThanksCard", b =>
@@ -96,6 +129,17 @@ namespace WebApplication1.Migrations
                     b.HasOne("WebApplication1.Models.User", "To")
                         .WithMany()
                         .HasForeignKey("ToId");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.User", b =>
+                {
+                    b.HasOne("WebApplication1.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId");
+
+                    b.HasOne("WebApplication1.Models.Root", "Root")
+                        .WithMany()
+                        .HasForeignKey("RootId");
                 });
 #pragma warning restore 612, 618
         }

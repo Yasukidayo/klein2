@@ -12,7 +12,8 @@ namespace WebApplication1.Models
         public long CD { get; set; }
         public string Name { get; set; } //カラム
         public string Password { get; set; } //カラム
-        public virtual Department DepartmentId { get; set; } //カラム
-        public virtual Root RootId { get; set; }　//カラム
+        public bool IsAdmin { get; set; }
+        public virtual Department Department { get; set; } //カラム
+        public virtual Root Root { get; set; }　//カラム
     }
 }
