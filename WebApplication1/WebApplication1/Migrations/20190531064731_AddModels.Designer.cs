@@ -10,8 +10,8 @@ using WebApplication1.Models;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190529025924_all")]
-    partial class all
+    [Migration("20190531064731_AddModels")]
+    partial class AddModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,6 +48,8 @@ namespace WebApplication1.Migrations
 
                     b.Property<string>("BodyFlag2");
 
+                    b.Property<bool>("IsAdmin");
+
                     b.HasKey("Id");
 
                     b.ToTable("Roots");
@@ -60,6 +62,8 @@ namespace WebApplication1.Migrations
 
                     b.Property<string>("Body");
 
+                    b.Property<long>("CD");
+
                     b.Property<DateTime>("CreatedDateTime");
 
                     b.Property<long>("Date");
@@ -69,8 +73,6 @@ namespace WebApplication1.Migrations
                     b.Property<bool>("Flag2");
 
                     b.Property<long?>("FromId");
-
-                    b.Property<long>("ThanksCardCD");
 
                     b.Property<string>("Title");
 

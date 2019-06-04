@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace WebApplication1.Migrations
 {
-    public partial class all : Migration
+    public partial class AddModels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,6 +35,7 @@ namespace WebApplication1.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    IsAdmin = table.Column<bool>(nullable: false),
                     BodyFlag1 = table.Column<string>(nullable: true),
                     BodyFlag2 = table.Column<string>(nullable: true)
                 },
@@ -79,7 +80,7 @@ namespace WebApplication1.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    ThanksCardCD = table.Column<long>(nullable: false),
+                    CD = table.Column<long>(nullable: false),
                     FromId = table.Column<long>(nullable: true),
                     ToId = table.Column<long>(nullable: true),
                     Title = table.Column<string>(nullable: true),

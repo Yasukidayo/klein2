@@ -70,11 +70,11 @@ namespace WebApplication1.Migrations
 
                     b.Property<bool>("Flag2");
 
-                    b.Property<long?>("FromId");
+                    b.Property<long>("FromId");
 
                     b.Property<string>("Title");
 
-                    b.Property<long?>("ToId");
+                    b.Property<long>("ToId");
 
                     b.HasKey("Id");
 
@@ -122,11 +122,13 @@ namespace WebApplication1.Migrations
                 {
                     b.HasOne("WebApplication1.Models.User", "From")
                         .WithMany()
-                        .HasForeignKey("FromId");
+                        .HasForeignKey("FromId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WebApplication1.Models.User", "To")
                         .WithMany()
-                        .HasForeignKey("ToId");
+                        .HasForeignKey("ToId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WebApplication1.Models.User", b =>

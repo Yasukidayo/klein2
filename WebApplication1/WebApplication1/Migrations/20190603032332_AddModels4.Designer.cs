@@ -10,8 +10,8 @@ using WebApplication1.Models;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190530014558_cd")]
-    partial class cd
+    [Migration("20190603032332_AddModels4")]
+    partial class AddModels4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,11 +72,11 @@ namespace WebApplication1.Migrations
 
                     b.Property<bool>("Flag2");
 
-                    b.Property<long?>("FromId");
+                    b.Property<long>("FromId");
 
                     b.Property<string>("Title");
 
-                    b.Property<long?>("ToId");
+                    b.Property<long>("ToId");
 
                     b.HasKey("Id");
 
@@ -124,11 +124,13 @@ namespace WebApplication1.Migrations
                 {
                     b.HasOne("WebApplication1.Models.User", "From")
                         .WithMany()
-                        .HasForeignKey("FromId");
+                        .HasForeignKey("FromId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WebApplication1.Models.User", "To")
                         .WithMany()
-                        .HasForeignKey("ToId");
+                        .HasForeignKey("ToId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WebApplication1.Models.User", b =>
