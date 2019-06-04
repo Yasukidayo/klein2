@@ -25,7 +25,7 @@ namespace WebApplication1.Controllers
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return await _context.Users
-                .Include(User => User.Root)
+               // .Include(User => User.Root)
                 .Include(User => User.Department)
                 .ToListAsync();
         }
@@ -78,6 +78,8 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
+     
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 

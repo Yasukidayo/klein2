@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebApplication1.Models;
@@ -9,9 +10,10 @@ using WebApplication1.Models;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20190604015455_idpro")]
+    partial class idpro
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,6 +37,22 @@ namespace WebApplication1.Migrations
                     b.HasIndex("ParentId");
 
                     b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.Root", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("BodyFlag1");
+
+                    b.Property<string>("BodyFlag2");
+
+                    b.Property<bool>("IsAdmin");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roots");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.ThanksCard", b =>
@@ -84,9 +102,15 @@ namespace WebApplication1.Migrations
 
                     b.Property<string>("Password");
 
+                    b.Property<long>("RootId");
+
+                    b.Property<int?>("RootId1");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
+
+                    b.HasIndex("RootId1");
 
                     b.ToTable("Users");
                 });
@@ -117,6 +141,10 @@ namespace WebApplication1.Migrations
                         .WithMany()
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebApplication1.Models.Root", "Root")
+                        .WithMany()
+                        .HasForeignKey("RootId1");
                 });
 #pragma warning restore 612, 618
         }

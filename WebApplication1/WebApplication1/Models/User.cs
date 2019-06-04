@@ -15,7 +15,6 @@ namespace WebApplication1.Models
         public bool IsAdmin { get; set; }
         public long DepartmentId { get; set; }
         public virtual Department Department { get; set; } //カラム
-        public long RootId { get; set; }
-        public virtual Root Root { get; set; }　//カラム
+   
     }
 }
