@@ -32,7 +32,7 @@ namespace WebApplication1.Controllers
         public ActionResult<User> Post([FromBody] User user) 
         {
             var authorizedUser2 = _context.Users
-                .Include(User => User.Root)
+             //   .Include(User => User.Root)
                 .Include(User => User.Department)
                 .SingleOrDefault(x => x.Name == user.Name && x.Password == user.Password );
            
@@ -43,7 +43,7 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-           if (authorizedUser2.Root.IsAdmin == false)
+           if (authorizedUser2.IsAdmin == false)
             {
                 return NotFound();
             }
