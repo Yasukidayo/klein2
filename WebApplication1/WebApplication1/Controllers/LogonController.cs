@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -30,7 +31,9 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public ActionResult<User> Post([FromBody] User user)
         {
-            var authorizedUser = _context.Users.SingleOrDefault(x => x.Name == user.Name && x.Password == user.Password);
+            var authorizedUser = _context.Users
+                .Include(User => User.Department)
+                .SingleOrDefault(x => x.Name == user.Name && x.Password == user.Password);
 
             if (authorizedUser == null)
             {

@@ -16,7 +16,5 @@ namespace WebApplication1.Models
         public virtual Department Parent { get; set; }
        // public virtual ICollection<Department> Children { get; set; }
 
-        // 1対多: Department エンティティには複数の User エンティティが属する
-       // public virtual ICollection<User> Users { get; set; }
     }
 }
