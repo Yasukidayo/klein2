@@ -10,8 +10,8 @@ using WebApplication1.Models;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190604021436_idp")]
-    partial class idp
+    [Migration("20190611064802_AddModels")]
+    partial class AddModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,20 +39,16 @@ namespace WebApplication1.Migrations
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.Root", b =>
+            modelBuilder.Entity("WebApplication1.Models.Responsemessage", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("BodyFlag1");
-
-                    b.Property<string>("BodyFlag2");
-
-                    b.Property<bool>("IsAdmin");
+                    b.Property<long>("CD");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roots");
+                    b.ToTable("Responsemessages");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.ThanksCard", b =>
@@ -87,6 +83,24 @@ namespace WebApplication1.Migrations
                     b.ToTable("ThanksCards");
                 });
 
+            modelBuilder.Entity("WebApplication1.Models.ThanksCardResponse", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("ResponsemessageId");
+
+                    b.Property<long>("ThanksCardId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResponsemessageId");
+
+                    b.HasIndex("ThanksCardId");
+
+                    b.ToTable("ThanksCardResponses");
+                });
+
             modelBuilder.Entity("WebApplication1.Models.User", b =>
                 {
                     b.Property<long>("Id")
@@ -94,7 +108,7 @@ namespace WebApplication1.Migrations
 
                     b.Property<long>("CD");
 
-                    b.Property<long>("DepartmentId");
+                    b.Property<long?>("DepartmentId");
 
                     b.Property<bool>("IsAdmin");
 
@@ -102,13 +116,9 @@ namespace WebApplication1.Migrations
 
                     b.Property<string>("Password");
 
-                    b.Property<long>("RootId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
-
-                    b.HasIndex("RootId");
 
                     b.ToTable("Users");
                 });
@@ -133,17 +143,24 @@ namespace WebApplication1.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("WebApplication1.Models.ThanksCardResponse", b =>
+                {
+                    b.HasOne("WebApplication1.Models.Responsemessage", "Responsemessage")
+                        .WithMany("ThanksCardResponses")
+                        .HasForeignKey("ResponsemessageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebApplication1.Models.ThanksCard", "ThanksCard")
+                        .WithMany("ThanksCardResponses")
+                        .HasForeignKey("ThanksCardId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("WebApplication1.Models.User", b =>
                 {
                     b.HasOne("WebApplication1.Models.Department", "Department")
                         .WithMany()
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("WebApplication1.Models.Root", "Root")
-                        .WithMany()
-                        .HasForeignKey("RootId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("DepartmentId");
                 });
 #pragma warning restore 612, 618
         }

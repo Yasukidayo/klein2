@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WebApplication1.Models
 {
@@ -17,6 +18,8 @@ namespace WebApplication1.Models
         public bool Flag1 { get; set; }
         public bool Flag2 { get; set; }
 
+
+        public virtual ICollection<ThanksCardResponse> ThanksCardResponses { get; set; }
 
 
     }
