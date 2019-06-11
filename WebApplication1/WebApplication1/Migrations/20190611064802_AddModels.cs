@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace WebApplication1.Migrations
 {
-    public partial class all : Migration
+    public partial class AddModels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,17 +30,16 @@ namespace WebApplication1.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Roots",
+                name: "Responsemessages",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    BodyFlag1 = table.Column<string>(nullable: true),
-                    BodyFlag2 = table.Column<string>(nullable: true)
+                    CD = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roots", x => x.Id);
+                    table.PrimaryKey("PK_Responsemessages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -53,8 +52,7 @@ namespace WebApplication1.Migrations
                     Name = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     IsAdmin = table.Column<bool>(nullable: false),
-                    DepartmentId = table.Column<long>(nullable: true),
-                    RootId = table.Column<int>(nullable: true)
+                    DepartmentId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,12 +63,6 @@ namespace WebApplication1.Migrations
                         principalTable: "Departments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Users_Roots_RootId",
-                        column: x => x.RootId,
-                        principalTable: "Roots",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,9 +71,9 @@ namespace WebApplication1.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    ThanksCardCD = table.Column<long>(nullable: false),
-                    FromId = table.Column<long>(nullable: true),
-                    ToId = table.Column<long>(nullable: true),
+                    CD = table.Column<long>(nullable: false),
+                    FromId = table.Column<long>(nullable: false),
+                    ToId = table.Column<long>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Date = table.Column<long>(nullable: false),
                     Body = table.Column<string>(nullable: true),
@@ -97,19 +89,55 @@ namespace WebApplication1.Migrations
                         column: x => x.FromId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ThanksCards_Users_ToId",
                         column: x => x.ToId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ThanksCardResponses",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    ThanksCardId = table.Column<long>(nullable: false),
+                    ResponsemessageId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ThanksCardResponses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ThanksCardResponses_Responsemessages_ResponsemessageId",
+                        column: x => x.ResponsemessageId,
+                        principalTable: "Responsemessages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ThanksCardResponses_ThanksCards_ThanksCardId",
+                        column: x => x.ThanksCardId,
+                        principalTable: "ThanksCards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Departments_ParentId",
                 table: "Departments",
                 column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ThanksCardResponses_ResponsemessageId",
+                table: "ThanksCardResponses",
+                column: "ResponsemessageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ThanksCardResponses_ThanksCardId",
+                table: "ThanksCardResponses",
+                column: "ThanksCardId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ThanksCards_FromId",
@@ -125,15 +153,16 @@ namespace WebApplication1.Migrations
                 name: "IX_Users_DepartmentId",
                 table: "Users",
                 column: "DepartmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_RootId",
-                table: "Users",
-                column: "RootId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ThanksCardResponses");
+
+            migrationBuilder.DropTable(
+                name: "Responsemessages");
+
             migrationBuilder.DropTable(
                 name: "ThanksCards");
 
@@ -142,9 +171,6 @@ namespace WebApplication1.Migrations
 
             migrationBuilder.DropTable(
                 name: "Departments");
-
-            migrationBuilder.DropTable(
-                name: "Roots");
         }
     }
 }

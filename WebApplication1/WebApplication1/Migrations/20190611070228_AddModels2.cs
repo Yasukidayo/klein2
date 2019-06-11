@@ -2,22 +2,21 @@
 
 namespace WebApplication1.Migrations
 {
-    public partial class root : Migration
+    public partial class AddModels2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "IsAdmin",
-                table: "Roots",
-                nullable: false,
-                defaultValue: false);
+            migrationBuilder.AddColumn<string>(
+                name: "Message",
+                table: "Responsemessages",
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsAdmin",
-                table: "Roots");
+                name: "Message",
+                table: "Responsemessages");
         }
     }
 }

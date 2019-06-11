@@ -37,6 +37,20 @@ namespace WebApplication1.Migrations
                     b.ToTable("Departments");
                 });
 
+            modelBuilder.Entity("WebApplication1.Models.Responsemessage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("CD");
+
+                    b.Property<string>("Message");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Responsemessages");
+                });
+
             modelBuilder.Entity("WebApplication1.Models.ThanksCard", b =>
                 {
                     b.Property<long>("Id")
@@ -67,6 +81,24 @@ namespace WebApplication1.Migrations
                     b.HasIndex("ToId");
 
                     b.ToTable("ThanksCards");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.ThanksCardResponse", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("ResponsemessageId");
+
+                    b.Property<long>("ThanksCardId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResponsemessageId");
+
+                    b.HasIndex("ThanksCardId");
+
+                    b.ToTable("ThanksCardResponses");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.User", b =>
@@ -108,6 +140,19 @@ namespace WebApplication1.Migrations
                     b.HasOne("WebApplication1.Models.User", "To")
                         .WithMany()
                         .HasForeignKey("ToId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.ThanksCardResponse", b =>
+                {
+                    b.HasOne("WebApplication1.Models.Responsemessage", "Responsemessage")
+                        .WithMany("ThanksCardResponses")
+                        .HasForeignKey("ResponsemessageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebApplication1.Models.ThanksCard", "ThanksCard")
+                        .WithMany("ThanksCardResponses")
+                        .HasForeignKey("ThanksCardId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
