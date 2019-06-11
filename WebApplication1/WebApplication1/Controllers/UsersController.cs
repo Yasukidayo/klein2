@@ -25,8 +25,7 @@ namespace WebApplication1.Controllers
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return await _context.Users
-               // .Include(User => User.Root)
-                .Include(User => User.Department)
+                .Include(User => User.DepartmentId)
                 .ToListAsync();
         }
 
