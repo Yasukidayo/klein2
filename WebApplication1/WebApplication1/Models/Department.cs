@@ -14,7 +14,7 @@ namespace WebApplication1.Models
        
         public long? ParentId { get; set; } //?をつけることによってNULLが入るようになる
         public virtual Department Parent { get; set; }
-       // public virtual ICollection<Department> Children { get; set; }
+     
 
     }
 }
