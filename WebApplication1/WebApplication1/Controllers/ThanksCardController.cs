@@ -47,5 +47,28 @@ namespace WebApplication1.Controllers
             // TODO: Error Handling
             return thanksCard;
         }
+
+        // DELETE: api/ThanksCards/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ThanksCard>> DeleteThanksCard(long id)
+        {
+            var thanksCard = await _context.ThanksCards.FindAsync(id);
+            if (thanksCard == null)
+            {
+                return NotFound();
+            }
+
+            _context.ThanksCards.Remove(thanksCard);
+            await _context.SaveChangesAsync();
+
+            return thanksCard;
+        }
+
+        private bool ThanksCardExists(long id)
+        {
+            return _context.ThanksCards.Any(e => e.Id == id);
+        }
+
+
     }
 }
